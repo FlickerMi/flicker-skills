@@ -1,0 +1,51 @@
+{
+  "skill_name": "analytics-tracker",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我给这个 Next.js SaaS 项目加 GA4 埋点。项目在 D:\\code\\skills\\flicker-skills\\analytics-tracker-workspace\\sample-projects\\nextjs-saas，主平台用 GA4，不需要追加平台。扫描完后直接用你认为合适的候选事件，生成 analytics.ts 和对应的文件修改。",
+      "expected_output": "输出包含：1) P1/P2/P3 分级候选清单（signup、checkout、logout 都被识别到）；2) 生成的 analytics.ts 内容（含 trackEvent 分发函数和具名事件函数）；3) 每个修改文件的 diff 预览",
+      "files": [
+        "D:\\code\\skills\\flicker-skills\\analytics-tracker-workspace\\sample-projects\\nextjs-saas\\pages\\signup.tsx",
+        "D:\\code\\skills\\flicker-skills\\analytics-tracker-workspace\\sample-projects\\nextjs-saas\\pages\\checkout.tsx",
+        "D:\\code\\skills\\flicker-skills\\analytics-tracker-workspace\\sample-projects\\nextjs-saas\\components\\Navbar.tsx"
+      ],
+      "assertions": [
+        "输出中出现 P1 优先级标记（含 'P1' 或 '✦'）",
+        "识别出 signup 相关事件（如 signup_submit、signupSubmit）",
+        "识别出 purchase/checkout 相关事件",
+        "生成的 analytics.ts 包含 trackEvent 函数定义",
+        "生成的 analytics.ts 包含 window.gtag 调用（GA4 分发）",
+        "输出中包含文件修改 diff（含 import track 或 track. 调用）"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "我有个 Vue 3 电商项目，想接入 Umami 分析。项目在 D:\\code\\skills\\flicker-skills\\analytics-tracker-workspace\\sample-projects\\vue-shop，主平台 Umami，不追加其他平台。帮我找出所有需要埋点的地方，然后生成追踪代码。",
+      "expected_output": "输出包含：1) 带 P1/P2 分级的候选清单；2) analytics.js（无 tsconfig → JS 版本）；3) 各文件修改 diff",
+      "files": [
+        "D:\\code\\skills\\flicker-skills\\analytics-tracker-workspace\\sample-projects\\vue-shop\\src\\views\\LoginView.vue",
+        "D:\\code\\skills\\flicker-skills\\analytics-tracker-workspace\\sample-projects\\vue-shop\\src\\components\\CartButton.vue"
+      ],
+      "assertions": [
+        "生成的是 analytics.js 而非 analytics.ts（项目无 tsconfig.json）",
+        "生成的模块包含 window.umami 调用",
+        "识别出 login/loginWithGoogle 相关事件",
+        "识别出 checkout 或 addToCart 相关事件",
+        "输出的候选清单包含 P1 或 P2 优先级标记（带 '✦' 或 'P1'/'P2'）",
+        "输出包含文件修改 diff（含 import 和 track. 调用）"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "我在考虑给新产品加数据分析，但还没决定用哪个平台。听说有 GA4、Umami 和 Plausible，能告诉我用 analytics-tracker 的完整流程是什么吗？另外如果我要同时接两个平台，哪个该设主平台？",
+      "expected_output": "解释 5 个阶段的工作流；说明主平台 vs 追加平台的区别；给出平台选择建议，逻辑清晰",
+      "files": [],
+      "assertions": [
+        "解释了至少 4 个工作阶段（扫描/生成/修改/配置等关键词出现）",
+        "提到了主平台 vs 追加平台的区别（primary/additional）",
+        "给出了具体的平台选择推荐，有明确立场而非模糊建议"
+      ]
+    }
+  ]
+}
