@@ -1,6 +1,6 @@
 # Debug Playbook
 
-> Read this when debugging. Pairs with `code-map.md`: this says *what symptom → which area*, the code-map says *where that area is*.
+> **Read this FIRST when investigating any bug, test failure, or unexpected behavior — before scanning logs or grep'ing code.** This playbook tells you **how** to diagnose a symptom; once narrowed to an area, jump to `code-map.md` for the exact path. Skipping this and grep'ing blindly is exactly the token-burning behavior this doc exists to prevent.
 
 ## Run / build / test
 - **Run**: [command]
@@ -14,14 +14,20 @@
 - **Health / metrics endpoints**: [if any]
 
 ## Common scenarios
-[Per scenario — tailored to the detected stack:]
 
-### [Symptom, e.g. "500 on an API route"]
-- **Likely area**: [point into code-map, e.g. "service layer, see `path/`"]
+**Evidence-based only.** Each scenario below must have project-specific evidence — a grep hit, a `fix:` commit, a test exercising it, or a config that enables the feature. Do not include generic stack-hints that don't apply to this codebase; 5 verified scenarios beat 15 speculative ones.
+
+If the project has all three phases, group scenarios accordingly — it makes the playbook easier to navigate under stress:
+- **Startup failures** (port in use, env missing, DI graph broken, schema mismatch on boot)
+- **Request-time failures** (5xx, 4xx, slow responses, broken validation)
+- **Background-job failures** (cron not firing, job stuck, retry storm, queue backed up)
+
+### [Symptom, e.g. "500 on POST /api/orders"]
+- **Likely area**: [point into code-map, e.g. "service layer, see `src/services/order/`"]
 - **Diagnose**: [concrete steps — what to grep, what log line to find, what to check first]
-- **Common causes / fixes**: [the usual culprits for this stack]
+- **Common causes / fixes**: [the actual culprits seen in this project, not generic ones]
 
-[Repeat for the top 5–10 symptoms realistic for this project.]
+[Repeat for 5–10 symptoms backed by real evidence in this project.]
 
 ## Diagnostic toolbox
 - **Useful greps**: [e.g. `rg "TODO|FIXME"`, error-code patterns, specific patterns for this stack]
